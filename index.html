@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이폼사인 - 폭염 기록의무 대응 캠페인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  :root{
+    --navy:#101B2D;
+    --navy-2:#16233A;
+    --steel:#3E5C76;
+    --amber:#FFB000;
+    --amber-dark:#D98E00;
+    --paper:#F4F5F1;
+    --paper-2:#FFFFFF;
+    --ink:#1A1F27;
+    --ink-soft:#5B6472;
+    --danger:#C6433B;
+    --danger-bg:#FBEAE8;
+    --ok:#2E7D5B;
+    --line:#DFE2DC;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans KR', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .display{
+    font-family:'Black Han Sans', sans-serif;
+    letter-spacing:0.5px;
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Hazard stripe divider ---------- */
+  .hazard-strip{
+    height:10px;
+    background:repeating-linear-gradient(
+      -45deg,
+      var(--amber),
+      var(--amber) 14px,
+      var(--navy) 14px,
+      var(--navy) 28px
+    );
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    background:var(--navy);
+    color:#fff;
+    padding:16px 0;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-weight:900; font-size:20px; letter-spacing:0.5px;}
+  .logo span{color:var(--amber);}
+  .topbar-tag{
+    font-size:12px;
+    color:#9FB0C6;
+    border:1px solid #2A3B54;
+    padding:5px 12px;
+    border-radius:999px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:radial-gradient(circle at 78% 18%, #1C2B45 0%, var(--navy) 55%, var(--navy) 100%);
+    color:#fff;
+    padding:76px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,176,0,0.12);
+    border:1px solid rgba(255,176,0,0.4);
+    color:var(--amber);
+    font-size:13px;
+    font-weight:700;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"⚠"; font-size:14px;}
+  .hero h1{
+    font-size:44px;
+    line-height:1.28;
+    margin-bottom:20px;
+  }
+  .hero h1 .hl{color:var(--amber);}
+  .hero p.sub{
+    font-size:16.5px;
+    color:#C7D0DE;
+    max-width:520px;
+    margin-bottom:32px;
+  }
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:15px 26px;
+    border-radius:6px;
+    font-weight:700;
+    font-size:15px;
+    text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:var(--amber);
+    color:var(--navy);
+    box-shadow:0 8px 20px rgba(255,176,0,0.25);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:#fff;
+    border:1px solid #445A78;
+  }
+
+  /* ---------- Gauge ---------- */
+  .gauge-card{
+    background:var(--navy-2);
+    border:1px solid #26374F;
+    border-radius:16px;
+    padding:30px 26px 24px;
+  }
+  .gauge-label{
+    font-size:12px;
+    color:#8CA0BA;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .gauge-title{font-size:15px; color:#fff; font-weight:700; margin-bottom:18px;}
+  .gauge-visual{position:relative; width:100%; text-align:center;}
+  .gauge-num{
+    font-family:'Black Han Sans', sans-serif;
+    font-size:64px;
+    color:var(--amber);
+    line-height:1;
+  }
+  .gauge-unit{font-size:16px; color:#9FB0C6; margin-left:4px;}
+  .gauge-scale{
+    display:flex;
+    margin-top:22px;
+    border-radius:8px;
+    overflow:hidden;
+    height:14px;
+  }
+  .seg{height:100%;}
+  .seg-1{width:31%; background:#3E5C76;}
+  .seg-2{width:2%; background:var(--amber-dark);}
+  .seg-3{width:2%; background:var(--amber);}
+  .seg-4{width:65%; background:var(--danger);}
+  .gauge-marks{display:flex; justify-content:space-between; font-size:11px; color:#8CA0BA; margin-top:8px;}
+  .gauge-foot{font-size:12.5px; color:#8CA0BA; margin-top:18px; border-top:1px solid #26374F; padding-top:14px;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:72px 0;}
+  .section-head{max-width:640px; margin-bottom:40px;}
+  .kicker{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--amber-dark);
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    margin-bottom:10px;
+  }
+  h2{font-size:30px; margin-bottom:14px;}
+  .lead{color:var(--ink-soft); font-size:16px;}
+
+  /* ---------- Problem / law callout ---------- */
+  .law-block{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-left:5px solid var(--steel);
+    border-radius:8px;
+    padding:26px 28px;
+    font-size:15.5px;
+    color:var(--ink);
+    margin-bottom:26px;
+  }
+  .law-block b{color:var(--navy);}
+
+  .penalty-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .penalty-card{
+    background:var(--danger-bg);
+    border:1px solid #F1C7C3;
+    border-radius:10px;
+    padding:24px;
+  }
+  .penalty-card .tag{
+    display:inline-block;
+    background:var(--danger);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:4px;
+    margin-bottom:12px;
+  }
+  .penalty-card .amt{
+    font-family:'Black Han Sans', sans-serif;
+    font-size:26px;
+    color:var(--danger);
+    margin-bottom:6px;
+  }
+  .penalty-card p{font-size:13.5px; color:#7A3E3A;}
+
+  /* ---------- Empathy quote ---------- */
+  .quote-band{
+    background:var(--navy);
+    color:#fff;
+    padding:56px 0;
+  }
+  .quote-band blockquote{
+    max-width:760px;
+    margin:0 auto;
+    font-size:22px;
+    line-height:1.55;
+    font-weight:500;
+    text-align:center;
+  }
+  .quote-band blockquote .amt{color:var(--amber); font-weight:700;}
+
+  /* ---------- Feature grid ---------- */
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .feature-card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 22px;
+    transition:box-shadow .18s ease, transform .18s ease;
+  }
+  .feature-card:hover{
+    box-shadow:0 12px 28px rgba(16,27,45,0.08);
+    transform:translateY(-3px);
+  }
+  .feature-icon{
+    width:40px; height:40px;
+    border-radius:8px;
+    background:var(--navy);
+    color:var(--amber);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900;
+    font-size:16px;
+    margin-bottom:16px;
+  }
+  .feature-card h3{font-size:16.5px; margin-bottom:8px;}
+  .feature-card p{font-size:13.8px; color:var(--ink-soft);}
+
+  /* ---------- Industry cards ---------- */
+  .industry-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  .industry-card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 18px;
+    border-top:4px solid var(--steel);
+  }
+  .industry-card .ind-tag{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--steel);
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    margin-bottom:10px;
+  }
+  .industry-card p{font-size:14px; font-weight:500; color:var(--ink);}
+
+  /* ---------- CTA ---------- */
+  .cta-band{
+    background:linear-gradient(135deg, var(--navy) 0%, #1C2B45 100%);
+    color:#fff;
+    border-radius:18px;
+    padding:52px 48px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .cta-band h3{font-size:26px; margin-bottom:10px;}
+  .cta-band p{color:#C7D0DE; font-size:14.5px; max-width:420px;}
+  .cta-buttons{display:flex; gap:12px; flex-wrap:wrap;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--navy);
+    color:#8CA0BA;
+    padding:32px 0;
+    font-size:12.5px;
+    text-align:center;
+  }
+  footer a{color:var(--amber); text-decoration:none;}
+
+  /* ---------- Internal note badge (for marketing team) ---------- */
+  .internal-note{
+    background:#FFF8E6;
+    border:1px dashed var(--amber-dark);
+    border-radius:8px;
+    padding:16px 20px;
+    font-size:13px;
+    color:#7A5A00;
+    max-width:1080px;
+    margin:24px auto 0;
+  }
+
+  @media (max-width:860px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero h1{font-size:32px;}
+    .penalty-grid, .feature-grid{grid-template-columns:1fr;}
+    .industry-grid{grid-template-columns:1fr 1fr;}
+    .cta-band{flex-direction:column; text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo">eform<span>sign</span></div>
+    <div class="topbar-tag">2026 여름 시즌 캠페인 · 마케팅팀 참고용 목업</div>
+  </div>
+</div>
+
+<div class="hazard-strip"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">2026.6.1 시행 · 산업안전보건기준에 관한 규칙 개정</div>
+      <h1 class="display">폭염 기록의무,<br>놓치면 <span class="hl">벌금</span>입니다</h1>
+      <p class="sub">체감온도 측정부터 조치사항 기록, 결재, 연말 보관까지 — 이폼사인 하나로 자동화하세요. 온열질환 예방 기록서식을 지금 무료로 받아보세요.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary">무료 템플릿 받기</a>
+        <a href="#" class="btn btn-ghost">도입 상담 신청</a>
+      </div>
+    </div>
+
+    <div class="gauge-card">
+      <div class="gauge-label">Heat Index Monitor</div>
+      <div class="gauge-title">현장 체감온도 기준</div>
+      <div class="gauge-visual">
+        <span class="gauge-num">33</span><span class="gauge-unit">℃ 이상</span>
+      </div>
+      <div class="gauge-scale">
+        <div class="seg seg-1"></div><div class="seg seg-2"></div><div class="seg seg-3"></div><div class="seg seg-4"></div>
+      </div>
+      <div class="gauge-marks"><span>0℃</span><span>31℃</span><span>33℃</span><span>고위험</span></div>
+      <div class="gauge-foot">31℃ 이상 2시간↑ 작업 = 폭염작업 해당 · 33℃ 이상 = 2시간마다 20분↑ 휴식 법정 의무</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Why now</div>
+      <h2>기록하지 않으면, 증명할 수 없습니다</h2>
+      <p class="lead">개정 규칙은 조치를 취하는 것만으로 끝나지 않습니다. "기록하고 보관"하는 것까지가 의무입니다.</p>
+    </div>
+
+    <div class="law-block">
+      <b>산업안전보건기준에 관한 규칙 제558조~제562조</b> — 체감온도 31℃ 이상 옥외작업 시 사업주는 체감온도 측정값과 실제 시행한 조치사항을 <b>일자별로 기록</b>하고, <b>해당 연도 12월 31일까지 보관</b>해야 합니다. 온·습도계 비치, 근로자 사전 교육, 이상 발생 시 응급조치 기록도 함께 요구됩니다.
+    </div>
+
+    <div class="penalty-grid">
+      <div class="penalty-card">
+        <span class="tag">근로자 사망 시</span>
+        <div class="amt">최대 7년 이하 징역<br>또는 1억 원 이하 벌금</div>
+        <p>영업정지 처분이 함께 부과될 수 있습니다.</p>
+      </div>
+      <div class="penalty-card">
+        <span class="tag">미준수 적발 시</span>
+        <div class="amt">최대 5년 이하 징역<br>또는 5천만 원 이하 벌금</div>
+        <p>사고가 없어도 기록·보관 의무 위반만으로 제재 대상입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMPATHY QUOTE -->
+<div class="quote-band">
+  <blockquote>
+    "매일 온도를 체크하고 조치사항을 <br class="only-desktop">수기로 기록하는 것은 안전관리자의 <span class="amt">업무 피로도</span>를 크게 높입니다."
+  </blockquote>
+</div>
+
+<!-- SOLUTION -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Solution</div>
+      <h2>이폼사인 폭염 안전관리 워크플로우</h2>
+      <p class="lead">현장 입력부터 결재, 보관까지 — 하나의 서식으로 연결합니다.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">1</div>
+        <h3>일자별 체감온도 기록부</h3>
+        <p>현장에서 모바일로 바로 입력, 31℃/33℃ 기준을 자동 판정합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">2</div>
+        <h3>조치사항 자동 기록</h3>
+        <p>냉방가동·작업시간조정·휴식부여 중 시행 항목을 원클릭으로 체크합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">3</div>
+        <h3>전자결재 승인</h3>
+        <p>현장 → 안전관리자 → 경영진까지, 결재 라인을 온라인으로 즉시 처리합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">4</div>
+        <h3>연말 자동 보관</h3>
+        <p>법정 보관기한(12/31)까지 자동 아카이빙, 감독 대비도 문제 없습니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">5</div>
+        <h3>위험성평가 연계</h3>
+        <p>온열질환 위험요인을 위험성평가 항목에 자동으로 반영합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">6</div>
+        <h3>신규 투입자 건강 확인</h3>
+        <p>온열질환 취약군을 사전에 체크하는 서식을 함께 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">For your site</div>
+      <h2>업종별로 다른 현장, 같은 위험</h2>
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <div class="ind-tag">건설업</div>
+        <p>현장 수십 곳, 체감온도 기록을 한 화면에서</p>
+      </div>
+      <div class="industry-card">
+        <div class="ind-tag">물류·상하차</div>
+        <p>상하차 구역 온열질환, 기록 하나 놓치면 과태료</p>
+      </div>
+      <div class="industry-card">
+        <div class="ind-tag">조선업</div>
+        <p>옥외 용접·도장 작업, 폭염 기록의무 자동화</p>
+      </div>
+      <div class="industry-card">
+        <div class="ind-tag">제조업</div>
+        <p>라인 작업자 건강관리, 기록부터 결재까지 한 번에</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h3 class="display">지금 무료 템플릿을 받아보세요</h3>
+        <p>도입 문의 시 온열질환 예방 기록서식 + 위험성평가 연계 서식을 무료로 드리고, 8월 중 도입 계약 시 개발비 할인 혜택도 함께 제공합니다.</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">무료 템플릿 받기</a>
+        <a href="#" class="btn btn-ghost">도입 상담 신청</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hazard-strip"></div>
+
+<footer>
+  <div class="wrap">
+    ⓒ POSIACE Co., Ltd. · eformsign Cloud Business Division · 본 페이지는 캠페인 콘텐츠 기획용 목업입니다.
+  </div>
+</footer>
+
+</body>
+</html>
